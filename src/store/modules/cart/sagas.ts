@@ -1,10 +1,15 @@
-import { all, takeLatest } from 'redux-saga/effects';
+import { all, takeLatest, select } from 'redux-saga/effects';
+import { IState } from '../..';
 import { addProductToCart } from './actions';
 
 type checkProductStockRequest = ReturnType<typeof addProductToCart>
 
-function* checkProductStock(action: checkProductStockRequest) {
-    console.log('action interceptada');
+function* checkProductStock({ payload }: checkProductStockRequest) {
+    const { product } = payload;
+
+    const currentQuantity: number = yield select((state: IState)=>{
+        return state.cart.items.find(item => item.product.id === product.id)?.quantity ?? 0; 
+    })
 }
 
 export default all([
