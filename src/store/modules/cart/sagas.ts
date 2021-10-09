@@ -1,6 +1,9 @@
 import { all, takeLatest } from 'redux-saga/effects';
+import { addProductToCart } from './actions';
 
-function checkProductStock() {
+type checkProductStockRequest = ReturnType<typeof addProductToCart>
+
+function* checkProductStock(action: checkProductStockRequest) {
     console.log('action interceptada');
 }
 
